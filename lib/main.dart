@@ -1,70 +1,55 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
-void main() => runApp(MyApp());
+import 'package:flutter/material.dart';
+import 'ui/login_page.dart';
+
+void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: LoginPage(),
-      theme: ThemeData(primarySwatch: Colors.blue),
-    );
+    return new MaterialApp(
+      title: 'NWIT',
+      theme: new ThemeData(
+
+        primarySwatch: Colors.blue,
+      ),
+      home: new SplashScreen(),
+    routes: <String, WidgetBuilder>{
+      '/LoginPage': (BuildContext context) => new LoginPage()
+    },
+  );
   }
 }
 
-class LoginPage extends StatefulWidget {
+class SplashScreen extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SplashScreenState createState() => new _SplashScreenState();
 }
 
-class _LoginPageState extends State<LoginPage>
-    with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen> {
+  startTime() async {
+    var _duration = new Duration(seconds: 2);
+    return new Timer(_duration, navigationPage);
+  }
+
+  void navigationPage() {
+    Navigator.of(context).pushReplacementNamed('/LoginPage');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    startTime();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.greenAccent,
-      body: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Image(
-            image: AssetImage("assets/mario.png"),
-            fit: BoxFit.cover,
-            color: Colors.black87,
-            colorBlendMode: BlendMode.darken,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              FlutterLogo(
-                size: 80,
-              ),
-              Form(
-                child: Theme(
-                  data: ThemeData(
-                      brightness: Brightness.dark, primarySwatch: Colors.teal),
-                  child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: "Enter Email",
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: "Enter Password",
-                        ),
-                        keyboardType: TextInputType.text,
-                        obscureText: true,
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          )
-        ],
+    return new Scaffold(
+      body: new Center(
+        child: new Image.asset('assets/img/DreamCatcherLogo.png'),
       ),
+
     );
   }
 }
